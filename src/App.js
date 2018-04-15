@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import HabitList from "./Habit/HabitList";
 import createStore from "./helpers/createStore";
 
-const store = createStore(null);
+const store = createStore(null, { showLoggers: true, DBName: "diary" });
 
 console.log("store", store);
 

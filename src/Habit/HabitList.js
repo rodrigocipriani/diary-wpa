@@ -11,7 +11,7 @@ class HabitList extends Component {
   // listHabits();
   componentDidMount() {
     this.props.listHabits();
-    this.props.getRatingByDay();
+    // this.props.getRatingByDay();
   }
 
   handleStarClick = (habitId, starNumber) => {

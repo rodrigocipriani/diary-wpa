@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
         habits: action.payload,
         loadings: { ...state.loadings, habits: false }
       };
+
     case habitActionTypes.LIST_RATINGS_BY_DAY:
       if (!action.ready) {
         return {
@@ -31,7 +32,7 @@ export default (state = initialState, action) => {
           loadings: { ...state.loadings, ratings: true }
         };
       }
-      let ratingsById = [];
+      let ratingsById = {};
       if (action.payload) {
         action.payload.forEach(element => {
           ratingsById[element.id] = element;
@@ -43,6 +44,7 @@ export default (state = initialState, action) => {
         ratings: ratingsById,
         loadings: { ...state.loadings, ratings: false }
       };
+
     case habitActionTypes.HABIT_VOTE:
       if (!action.ready) {
         return {
@@ -50,25 +52,17 @@ export default (state = initialState, action) => {
           loadings: { ...state.loadings, HabitVote: true }
         };
       }
-      let ratingsByIdUpdated = state.ratings;
-      console.log(" ##### action.payload", action.payload);
+      let ratingsByIdUpdated = state.ratings || {};
       if (action.payload) {
-        if (!state.ratings[action.payload.habitId]) {
-          ratingsByIdUpdated = ratingsByIdUpdated.slice();
+        if (!ratingsByIdUpdated[action.payload.habitId]) {
+          ratingsByIdUpdated = Object.assign({}, state.ratings);
           ratingsByIdUpdated[action.payload.habitId] = {
             id: action.payload.habitId,
             rate: action.payload.rate
           };
         } else {
-          ratingsByIdUpdated = state.ratings.map(element => {
-            if (element.id !== action.payload.habitId) {
-              return element;
-            }
-            return {
-              ...element,
-              rate: action.payload.rate
-            };
-          });
+          ratingsByIdUpdated[action.payload.habitId].rate = action.payload.rate;
+          ratingsByIdUpdated = Object.assign({}, ratingsByIdUpdated);
         }
       }
 

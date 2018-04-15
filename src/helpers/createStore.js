@@ -1,5 +1,8 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { createLogger } from "redux-logger";
+import { persistentStore } from "redux-pouchdb";
+import PouchDB from "pouchdb";
 import axios from "axios";
 import reducers from "../reducers";
 import config from "../config";
@@ -9,14 +12,14 @@ import config from "../config";
 /**
  * Logs all actions and states after they are dispatched.
  */
-const logger = store => next => action => {
-  console.group(action.type);
-  // console.info('dispatching', action)
-  let result = next(action);
-  // console.log('next state', store.getState())
-  console.groupEnd(action.type);
-  return result;
-};
+// const logger = store => next => action => {
+//   console.group(action.type);
+//   // console.info('dispatching', action)
+//   let result = next(action);
+//   // console.log('next state', store.getState())
+//   console.groupEnd(action.type);
+//   return result;
+// };
 
 /**
  * Lets you dispatch special actions with a { promise } field.
@@ -45,7 +48,38 @@ const readyStatePromise = store => next => action => {
   );
 };
 
-export default req => {
+export default (req, options = {}) => {
+  /**
+   * Receiving options
+   */
+  const {
+    // isProduction,
+    showLoggers,
+    DBName
+    // couchDBUrlConnector
+  } = options;
+
+  /**
+   * Logging redux
+   * */
+  let { loggerOptions } = options;
+  if (showLoggers !== undefined) {
+    loggerOptions = { ...loggerOptions, predicate: () => showLoggers };
+  }
+  const loggerMiddleware = createLogger(loggerOptions);
+
+  /**
+   * Persistence store
+   */
+  const db = new PouchDB(DBName);
+  let persistentStoreObject = () => initialState;
+  persistentStoreObject = persistentStore(db, data => {
+    console.log("$$$$$$$$$$$$ data", data);
+  });
+
+  /**
+   * Axios config
+   */
   let headers = {};
   if (req) {
     headers = {
@@ -79,17 +113,24 @@ export default req => {
     }
   );
 
-  let initialState = {};
+  /**
+   * Store config
+   */
+  let initialState = persistentStoreObject;
   // if (config.isClientSide) {
   //   initialState = window.INITIAL_STATE || {};
   // }
   const store = createStore(
     reducers,
     initialState,
-    applyMiddleware(
-      readyStatePromise,
-      logger,
-      thunk.withExtraArgument(axiosInstance)
+    compose(
+      applyMiddleware(
+        readyStatePromise,
+        loggerMiddleware,
+        thunk.withExtraArgument(axiosInstance)
+      ),
+      persistentStoreObject,
+      window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );
 
