@@ -30,7 +30,7 @@ class HabitList extends PureComponent {
 
     return (
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           Hábitos 14/04/2018
           <List>
             {habits.map(habit => {
