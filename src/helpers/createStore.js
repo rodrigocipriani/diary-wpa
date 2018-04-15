@@ -74,7 +74,7 @@ export default (req, options = {}) => {
   const db = new PouchDB(DBName);
   let persistentStoreObject = () => initialState;
   persistentStoreObject = persistentStore(db, data => {
-    console.log("$$$$$$$$$$$$ data", data);
+    console.log("1111111111111 data", data);
   });
 
   /**
@@ -116,23 +116,43 @@ export default (req, options = {}) => {
   /**
    * Store config
    */
-  let initialState = persistentStoreObject;
+  // let initialState = persistentStoreObject;
+  // console.log("### initialState", initialState);
+  // // if (config.isClientSide) {
+  // //   initialState = window.INITIAL_STATE || {};
+  // // }
+  // const store = createStore(
+  //   reducers,
+  //   initialState,
+  //   compose(
+  //     applyMiddleware(
+  //       readyStatePromise,
+  //       loggerMiddleware,
+  //       thunk.withExtraArgument(axiosInstance)
+  //     ),
+  //     persistentStoreObject,
+  //     window.devToolsExtension ? window.devToolsExtension() : f => f
+  //   )
+  // );
+
+  let initialState = {};
+  console.log("2222222222 initialState", initialState);
   // if (config.isClientSide) {
   //   initialState = window.INITIAL_STATE || {};
   // }
-  const store = createStore(
-    reducers,
-    initialState,
-    compose(
-      applyMiddleware(
-        readyStatePromise,
-        loggerMiddleware,
-        thunk.withExtraArgument(axiosInstance)
-      ),
-      persistentStoreObject,
-      window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
+
+  const applyMiddlewares = applyMiddleware(
+    readyStatePromise,
+    loggerMiddleware,
+    thunk.withExtraArgument(axiosInstance)
   );
+
+  const createStoreWithMiddleware = compose(
+    applyMiddlewares,
+    persistentStoreObject
+  )(createStore);
+
+  const store = createStoreWithMiddleware(reducers, initialState);
 
   return store;
 };

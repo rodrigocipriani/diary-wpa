@@ -5,9 +5,7 @@ import { Provider } from "react-redux";
 import HabitList from "./Habit/HabitList";
 import createStore from "./helpers/createStore";
 
-const store = createStore(null, { showLoggers: true, DBName: "diary" });
-
-console.log("store", store);
+const store = createStore(null, { showLoggers: false, DBName: "diary" });
 
 const App = () => (
   <Provider store={store}>
@@ -37,8 +35,6 @@ const App = () => (
 );
 
 const Home = () => {
-  console.log("oi");
-
   return (
     <div>
       <h2>Habits</h2>

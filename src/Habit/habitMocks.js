@@ -1,12 +1,13 @@
+const HABITS = [
+  { id: 1, name: "Café da manhã", tip: "Saudável e em casa" },
+  { id: 2, name: "Café da manhã", tip: "Saudável e em casa" },
+  { id: 3, name: "Café da manhã", tip: "Saudável e em casa" },
+  { id: 4, name: "Café da manhã", tip: "Saudável e em casa" }
+];
+
 const getHabits = () => {
   return new Promise(resolve => {
-    const mock = [
-      { id: 1, name: "Café da manhã", tip: "Saudável e em casa" },
-      { id: 2, name: "Café da manhã", tip: "Saudável e em casa" },
-      { id: 3, name: "Café da manhã", tip: "Saudável e em casa" },
-      { id: 4, name: "Café da manhã", tip: "Saudável e em casa" }
-    ];
-    resolve(mock);
+    resolve(HABITS);
   });
 };
 
@@ -23,6 +24,7 @@ const habitVote = (habitId, rate) => {
 };
 
 export default {
+  HABITS,
   getHabits,
   getRatingByDay,
   habitVote

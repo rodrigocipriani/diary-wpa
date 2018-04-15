@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import Grid from "material-ui/Grid";
 import List, { ListItem, ListItemText } from "material-ui/List";
@@ -6,12 +6,13 @@ import RatingStars from "../components/RatingStars";
 import { LinearProgress } from "material-ui/Progress";
 import * as habitActions from "./habitActions";
 
-class HabitList extends Component {
+class HabitList extends PureComponent {
   // const HabitList = ({ habits, listHabits }) => {
   // listHabits();
   componentDidMount() {
-    this.props.listHabits();
+    // this.props.listHabits();
     // this.props.getRatingByDay();
+    console.log("4444444444 componentDidMount");
   }
 
   handleStarClick = (habitId, starNumber) => {

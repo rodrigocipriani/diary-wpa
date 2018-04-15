@@ -1,7 +1,8 @@
 import { habitActionTypes } from "./habitActions";
+import HabitsMock from "./habitMocks";
 
 const initialState = {
-  habits: null,
+  habits: HabitsMock.HABITS,
   ratings: null,
   loadings: {
     habits: false,
@@ -9,6 +10,7 @@ const initialState = {
     HabitVote: false
   }
 };
+console.log("3333333333 initialState", initialState);
 
 export default (state = initialState, action) => {
   switch (action.type) {
