@@ -5,24 +5,37 @@ import List, { ListItem, ListItemText } from "material-ui/List";
 import RatingStars from "../components/RatingStars";
 import { LinearProgress } from "material-ui/Progress";
 import * as habitActions from "./habitActions";
+import habitUtils from "./HabitUtils";
 
 class HabitList extends PureComponent {
-  // const HabitList = ({ habits, listHabits }) => {
-  // listHabits();
+  state = {
+    currentPickDate: Date.now()
+  };
+
   componentDidMount() {
     // this.props.listHabits();
     // this.props.getRatingByDay();
     console.log("4444444444 componentDidMount");
   }
 
-  handleStarClick = (habitId, starNumber) => {
-    console.log(habitId, starNumber);
-    this.props.habitVote(habitId, starNumber);
+  handleStarClick = (date, habitId, starNumber) => {
+    console.log(date, habitId, starNumber);
+    this.props.habitVote(date, habitId, starNumber);
   };
 
   render() {
     const { habits, ratings } = this.props;
-    // console.log(">>>>> this.props", this.props);
+    const { currentPickDate } = this.state;
+    const currentPickDateKeys = habitUtils.dateToObjects(currentPickDate);
+    let currentRatings = null;
+    if (ratings) {
+      // todo: test if year, month, day are created
+      currentRatings =
+        ratings[currentPickDateKeys.year][currentPickDateKeys.month][
+          currentPickDateKeys.day
+        ];
+    }
+    console.log("ratings", ratings);
 
     if (!habits) {
       return <LinearProgress />;
@@ -31,12 +44,15 @@ class HabitList extends PureComponent {
     return (
       <Grid container>
         <Grid item xs={12} md={6}>
-          Hábitos 14/04/2018
+          Hábitos{" "}
+          {`${currentPickDateKeys.day}-${currentPickDateKeys.month}-${
+            currentPickDateKeys.year
+          }`}
           <List>
             {habits.map(habit => {
               let rate = null;
-              if (ratings && ratings[habit.id]) {
-                rate = ratings[habit.id].rate;
+              if (currentRatings && currentRatings[habit.id]) {
+                rate = currentRatings[habit.id].rate;
               }
               return (
                 <ListItem key={habit.id}>
@@ -51,7 +67,11 @@ class HabitList extends PureComponent {
                       <RatingStars
                         value={rate}
                         onClick={starNumber =>
-                          this.handleStarClick(habit.id, starNumber)
+                          this.handleStarClick(
+                            currentPickDate,
+                            habit.id,
+                            starNumber
+                          )
                         }
                       />
                     </Grid>

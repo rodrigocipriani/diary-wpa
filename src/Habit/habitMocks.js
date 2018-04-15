@@ -17,9 +17,9 @@ const getRatingByDay = () => {
   });
 };
 
-const habitVote = (habitId, rate) => {
+const habitVote = (date, habitId, rate) => {
   return new Promise(resolve => {
-    resolve({ habitId, rate });
+    resolve({ date, habitId, rate });
   });
 };
 

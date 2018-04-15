@@ -22,10 +22,14 @@ export const getRatingByDay = () => async (dispatch, getState, api) => {
   });
 };
 
-export const habitVote = (habitId, rate) => async (dispatch, getState, api) => {
+export const habitVote = (date, habitId, rate) => async (
+  dispatch,
+  getState,
+  api
+) => {
   return dispatch({
     type: habitActionTypes.HABIT_VOTE,
     // payload: { habitId, rate }
-    promise: habitMocks.habitVote(habitId, rate)
+    promise: habitMocks.habitVote(date, habitId, rate)
   });
 };
