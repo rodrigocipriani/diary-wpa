@@ -33,12 +33,14 @@ const RatingStars = ({ value, onClick }) => {
         </Grid>
       ))}
       <Grid item xs={1}>
-        <IconButton
-          onClick={() => handlerOnClick(null)}
-          aria-label={`reset stars`}
-        >
-          <small>x</small>
-        </IconButton>
+        {value > 0 && (
+          <IconButton
+            onClick={() => handlerOnClick(null)}
+            aria-label={`reset stars`}
+          >
+            <small>x</small>
+          </IconButton>
+        )}
       </Grid>
     </Grid>
   );
