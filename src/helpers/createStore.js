@@ -55,8 +55,8 @@ export default (req, options = {}) => {
   const {
     // isProduction,
     showLoggers,
-    DBName
-    // couchDBUrlConnector
+    DBName,
+    couchDBUrlConnector
   } = options;
 
   /**
@@ -76,6 +76,39 @@ export default (req, options = {}) => {
   persistentStoreObject = persistentStore(db, data => {
     console.log("1111111111111 data", data);
   });
+  if (DBName && couchDBUrlConnector) {
+    const sync = PouchDB.sync(DBName, couchDBUrlConnector, {
+      live: true,
+      retry: true
+    })
+      .on("change", info => {
+        // handle change
+        console.log("change", info);
+      })
+      .on("paused", err => {
+        // replication paused (e.g. replication up to date, user went offline)
+        console.log("paused", err);
+      })
+      .on("active", () => {
+        // replicate resumed (e.g. new changes replicating, user went back online)
+        console.log("active");
+      })
+      .on("denied", err => {
+        // a document failed to replicate (e.g. due to permissions)
+        console.log("denied", err);
+      })
+      .on("complete", info => {
+        // handle complete
+        console.log("complete", info);
+      })
+      .on("error", err => {
+        // handle error
+        console.log("error", err);
+      });
+    persistentStoreObject = persistentStore(db, data => {
+      console.log("data", data);
+    });
+  }
 
   /**
    * Axios config
@@ -116,30 +149,26 @@ export default (req, options = {}) => {
   /**
    * Store config
    */
-  // let initialState = persistentStoreObject;
-  // console.log("### initialState", initialState);
-  // // if (config.isClientSide) {
-  // //   initialState = window.INITIAL_STATE || {};
-  // // }
-  // const store = createStore(
-  //   reducers,
-  //   initialState,
-  //   compose(
-  //     applyMiddleware(
-  //       readyStatePromise,
-  //       loggerMiddleware,
-  //       thunk.withExtraArgument(axiosInstance)
-  //     ),
-  //     persistentStoreObject,
-  //     window.devToolsExtension ? window.devToolsExtension() : f => f
-  //   )
-  // );
-
   let initialState = {};
-  console.log("2222222222 initialState", initialState);
+  console.log("### initialState", initialState);
   // if (config.isClientSide) {
   //   initialState = window.INITIAL_STATE || {};
   // }
+  /*
+  const store = createStore(
+    reducers,
+    initialState,
+    compose(
+      applyMiddleware(
+        readyStatePromise,
+        loggerMiddleware,
+        thunk.withExtraArgument(axiosInstance)
+      ),
+      // persistentStoreObject,
+      window.devToolsExtension ? window.devToolsExtension() : f => f
+    )
+  );
+*/
 
   const applyMiddlewares = applyMiddleware(
     readyStatePromise,

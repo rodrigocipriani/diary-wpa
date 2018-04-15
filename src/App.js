@@ -5,7 +5,12 @@ import { Provider } from "react-redux";
 import HabitList from "./Habit/HabitList";
 import createStore from "./helpers/createStore";
 
-const store = createStore(null, { showLoggers: false, DBName: "diary" });
+const store = createStore(null, {
+  showLoggers: false,
+  DBName: "diary",
+  couchDBUrlConnector:
+    "https://rodrigocipriani:LQP1wqj9PQ@couchdb.cloudno.de/rodrigocipriani"
+});
 
 const App = () => (
   <Provider store={store}>
