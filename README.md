@@ -4,6 +4,9 @@
 
 ### Priorizados
 
+* Mostrar loading enquanto carrega pounchdb
+* Fazer trabalhar offline
+* Integração contínua - deploy fácil
 * Colocar import CSS (curso Thiago)
 * Integrating with an API Backend https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-an-api-backend
 * Progressive Web App Metadata https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#progressive-web-app-metadata
