@@ -21,3 +21,4 @@
 * Pre-Rendering into Static HTML Files https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files
 * Running Tests https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests
 * Analyzing the Bundle Size https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#analyzing-the-bundle-size
+* react-detect-offline in use to detect off-line situation. Make it better with native options, etc

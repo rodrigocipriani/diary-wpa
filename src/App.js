@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Provider } from "react-redux";
 import HabitList from "./Habit/HabitList";
 import createStore from "./helpers/createStore";
+import { Offline, Online } from "react-detect-offline";
+import Snackbar from "material-ui/Snackbar";
 
 const store = createStore(null, {
   showLoggers: false,
@@ -17,6 +19,25 @@ const App = () => (
     <Router>
       {/* <Reboot /> */}
       <div>
+        <Offline>
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            open={true}
+            onClose={this.handleClose}
+            SnackbarContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            style={{ position: "relative" }}
+            message={
+              <span id="message-id">
+                Você está trabalhando <strong>Offline</strong>. Mas pode ficar
+                tranquilo ;)
+                <br />
+                Suas alterações serão enviadas quando ficar Online.
+              </span>
+            }
+          />
+        </Offline>
         <ul>
           <li>
             <Link to="/">Habits</Link>
