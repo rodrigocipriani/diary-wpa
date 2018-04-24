@@ -83,30 +83,30 @@ export default (req, options = {}) => {
     })
       .on("change", info => {
         // handle change
-        console.log("change", info);
+        console.log("%POUNCH%  change", info);
       })
       .on("paused", err => {
         // replication paused (e.g. replication up to date, user went offline)
-        console.log("paused", err);
+        console.log("%POUNCH%  paused", err);
       })
       .on("active", () => {
         // replicate resumed (e.g. new changes replicating, user went back online)
-        console.log("active");
+        console.log("%POUNCH%  active");
       })
       .on("denied", err => {
         // a document failed to replicate (e.g. due to permissions)
-        console.log("denied", err);
+        console.log("%POUNCH%  denied", err);
       })
       .on("complete", info => {
         // handle complete
-        console.log("complete", info);
+        console.log("%POUNCH%  complete", info);
       })
       .on("error", err => {
         // handle error
-        console.log("error", err);
+        console.log("%POUNCH%  error", err);
       });
     persistentStoreObject = persistentStore(db, data => {
-      console.log("data", data);
+      console.log("%POUNCH%  data", data);
     });
   }
 

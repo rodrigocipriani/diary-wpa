@@ -37,7 +37,7 @@ class HabitList extends PureComponent {
     }
     console.log("ratings", ratings);
 
-    if (!habits) {
+    if (!habits || !ratings) {
       return <LinearProgress />;
     }
 
