@@ -24,7 +24,8 @@ class HabitList extends PureComponent {
   };
 
   render() {
-    const { habits, ratings } = this.props;
+    const { habits, ratings, habitReducer } = this.props;
+    console.log("@@@@@@@@@@@@ habitReducer", Object.assign({}, habitReducer));
     const { currentPickDate } = this.state;
     const currentPickDateKeys = habitUtils.dateToObjects(currentPickDate);
     let currentRatings = null;
@@ -89,7 +90,8 @@ class HabitList extends PureComponent {
 const mapStateToProps = ({ habitReducer }) => {
   return {
     habits: habitReducer.habits,
-    ratings: habitReducer.ratings
+    ratings: habitReducer.ratings,
+    habitReducer: habitReducer
   };
 };
 

@@ -4,7 +4,7 @@
 
 ### Priorizados
 
-* Mostrar loading enquanto carrega pounchdb
+* Mostrar loading enquanto carrega pounchdb (Testar IsSunc no App.js)
 * ~~Fazer trabalhar offline~~
 * Integração contínua - deploy fácil
 * Colocar import CSS (curso Thiago)
@@ -17,6 +17,7 @@
 
 ### Backlog
 
+* Escolher entre redux-pouchdb-plus e redux-pouchdb
 * Generating Dynamic < meta > Tags on the Server https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server
 * Changing the Page < title > https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#changing-the-page-title
 * Code Splitting https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting

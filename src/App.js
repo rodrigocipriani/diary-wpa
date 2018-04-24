@@ -6,6 +6,7 @@ import HabitList from "./Habit/HabitList";
 import createStore from "./helpers/createStore";
 import { Offline, Online } from "react-detect-offline";
 import Snackbar from "material-ui/Snackbar";
+import { inSync } from "redux-pouchdb-plus";
 
 const store = createStore(null, {
   showLoggers: false,
@@ -19,6 +20,19 @@ const App = () => (
     <Router>
       {/* <Reboot /> */}
       <div>
+        {/* {!inSync() ? (
+          // do something if the reducer states and the database are in sync
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            open={true}
+            onClose={this.handleClose}
+            SnackbarContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            style={{ position: "relative" }}
+            message={<span id="message-id">Sincronizando</span>}
+          />
+        ) : null} */}
         <Offline>
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "center" }}

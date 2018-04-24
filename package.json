@@ -20,6 +20,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-pouchdb": "^0.1.1",
+    "redux-pouchdb-plus": "^0.10.0",
     "redux-thunk": "^2.2.0"
   },
   "lint-staged": {

@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
-import { persistentStore } from "redux-pouchdb";
+// import { persistentStore } from "redux-pouchdb";
+import { persistentStore } from "redux-pouchdb-plus";
 import PouchDB from "pouchdb";
 import axios from "axios";
 import reducers from "../reducers";
@@ -105,9 +106,14 @@ export default (req, options = {}) => {
         // handle error
         console.log("%POUNCH%  error", err);
       });
-    persistentStoreObject = persistentStore(db, data => {
-      console.log("%POUNCH%  data", data);
-    });
+
+    // // redux-pouchdb
+    // persistentStoreObject = persistentStore(db, data => {
+    //   console.log("%POUNCH%  data", data);
+    //   return null;
+    // });
+    // example for persistentStore, but works the same for persistentReducer function.
+    persistentStoreObject = persistentStore({ db });
   }
 
   /**
