@@ -25,16 +25,30 @@ class HabitList extends PureComponent {
 
   render() {
     const { habits, ratings, habitReducer } = this.props;
-    console.log("@@@@@@@@@@@@ habitReducer", Object.assign({}, habitReducer));
+    console.log("@@@@@@@@@@@@ ratings", Object.assign({}, ratings));
     const { currentPickDate } = this.state;
     const currentPickDateKeys = habitUtils.dateToObjects(currentPickDate);
     let currentRatings = null;
     if (ratings) {
       // todo: test if year, month, day are created
-      currentRatings =
-        ratings[currentPickDateKeys.year][currentPickDateKeys.month][
-          currentPickDateKeys.day
-        ];
+      // currentRatings =
+      //   ratings[currentPickDateKeys.year][currentPickDateKeys.month][
+      //     currentPickDateKeys.day
+      //   ];
+      if (ratings[currentPickDateKeys.year]) {
+        if (ratings[currentPickDateKeys.year][currentPickDateKeys.month]) {
+          if (
+            ratings[currentPickDateKeys.year][currentPickDateKeys.month][
+              currentPickDateKeys.day
+            ]
+          ) {
+            currentRatings =
+              ratings[currentPickDateKeys.year][currentPickDateKeys.month][
+                currentPickDateKeys.day
+              ];
+          }
+        }
+      }
     }
     console.log("ratings", ratings);
 
